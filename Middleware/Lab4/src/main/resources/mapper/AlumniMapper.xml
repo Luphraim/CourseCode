@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.AlumniMapper">
+
+    <select id="search" resultType="AlumniDTO">
+        select * from alumni;
+    </select>
+
+    <update id="update">
+        update alumni set testColumn = #{info} where id = #{id};
+    </update>
+
+    <select id="aggregate">
+        select count(*) from alumni;
+    </select>
+</mapper>
