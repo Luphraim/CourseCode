@@ -64,11 +64,11 @@ $ cp zoo_sample.cfg zoo.cfg
 $ vim zoo.cfg
 ```
 
-![image-20200505195446622](/home/jason/.config/Typora/typora-user-images/image-20200505195446622.png)
+![image-20200505195446622](%E6%B6%88%E6%81%AF%E4%B8%AD%E9%97%B4%E4%BB%B6%E2%80%94%E2%80%94kafka.assets/image-20200505195446622.png)s
 
 依赖JVM环境，所以JVM和zookeeper环境变量都要配置：
 
-![image-20200505200536301](/home/jason/.config/Typora/typora-user-images/image-20200505200536301.png)
+![image-20200505200536301](%E6%B6%88%E6%81%AF%E4%B8%AD%E9%97%B4%E4%BB%B6%E2%80%94%E2%80%94kafka.assets/image-20200505200536301.png)
 
 然后生效：
 
@@ -97,7 +97,7 @@ Mode: standalone
 $ ./zkCli.sh
 ```
 
-![image-20200505210338441](/home/jason/.config/Typora/typora-user-images/image-20200505210338441.png)
+![image-20200505210338441](%E6%B6%88%E6%81%AF%E4%B8%AD%E9%97%B4%E4%BB%B6%E2%80%94%E2%80%94kafka.assets/image-20200505210338441.png)
 
 功能正常，`zookeeper`配置完成。
 
@@ -143,11 +143,11 @@ zookeeper.connect=ip:2181
 $ bin/kafka-server-start.sh config/server.properties
 ```
 
-![image-20200505212707766](/home/jason/.config/Typora/typora-user-images/image-20200505212707766.png)
+![image-20200505212707766](%E6%B6%88%E6%81%AF%E4%B8%AD%E9%97%B4%E4%BB%B6%E2%80%94%E2%80%94kafka.assets/image-20200505212707766.png)
 
 使用`jps`查看：
 
-![image-20200505213706208](/home/jason/.config/Typora/typora-user-images/image-20200505213706208.png)
+![image-20200505213706208](%E6%B6%88%E6%81%AF%E4%B8%AD%E9%97%B4%E4%BB%B6%E2%80%94%E2%80%94kafka.assets/image-20200505213706208.png)
 
 看到上面的显示即代表`kafka`服务启动成功了，不过如果需要后台运行的话需要自行使用`nohup`和`&`将进程调度到后台。
 
