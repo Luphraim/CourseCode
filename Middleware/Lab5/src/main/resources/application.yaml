@@ -1,0 +1,40 @@
+#server:
+#  port: 8088
+
+spring:
+  kafka:
+
+    # 指定代理地址，可以多个
+    bootstrap-servers: 47.100.32.48:9092
+
+    # 指定默认topic id
+    template:
+      default-topic: middleware
+
+    # 指定listener容器中的线程数，用于提高并发量
+    listener:
+      concurrency: 3
+
+    # 生产者配置
+    producer:
+      retries: 0
+      # 每次批量发送消息的数量
+      batch-size: 10000
+      buffer-memory: 33554432
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      properties:
+        linger.ms: 1
+
+    # 消费者配置
+    consumer:
+      enable-auto-commit: false
+      auto-commit-interval: 100ms
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      properties:
+        session.timeout.ms: 15000
+      # 指定默认消费者group id
+      group-id: Lab5
+      # 若设置为earliest,那么会从头开始读partition
+      auto-offset-reset: latest
