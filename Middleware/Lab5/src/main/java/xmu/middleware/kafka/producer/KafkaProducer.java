@@ -4,9 +4,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.kafka.support.SendResult;
 import org.springframework.stereotype.Component;
+import org.springframework.util.concurrent.ListenableFuture;
 
-import java.text.MessageFormat;
+import java.util.List;
 
 /**
  * 消息生产者
@@ -19,23 +21,22 @@ public class KafkaProducer {
     private static final Logger logger = LoggerFactory.getLogger(KafkaProducer.class);
 
     @Autowired
-    private KafkaTemplate<Object, Object> kafkaTemplate;
+    private KafkaTemplate<String,String> kafkaTemplate;
 
     /**
      * 使用KafkaTemplate向Kafka推送数据
      *
-     * @param topicName topic
-     * @param data
+     * @param topic topic
+     * @param value massage
      */
-    public void sendMessage(String topicName, String data) {
-        logger.info(MessageFormat.format("开始向Kafka推送数据：{0}", data));
+    public void sendMessage(String topic, String value) {
+        ListenableFuture<SendResult<String, String>> resultListenableFuture = kafkaTemplate.send(topic, value);
+        resultListenableFuture.addCallback(
+                successCallback -> logger.info("发送成功：topic= " + topic + " value= " + value),
+                failureCallback -> logger.info("发送失败：topic= " + topic + " value= " + value));
+    }
 
-        try {
-            kafkaTemplate.send(topicName, data);
-            logger.info("推送数据成功！");
-        } catch (Exception e) {
-            logger.error(MessageFormat.format("推送数据出错，topic:{0},data:{1}"
-                    , topicName, data));
-        }
+    public void sendMessage(String topic, List<String> msgList) {
+        msgList.forEach(msg -> sendMessage(topic, msg));
     }
 }

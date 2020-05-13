@@ -1,41 +1,43 @@
-#server:
-#  port: 8088
-
 spring:
   kafka:
 
-    # Ö¸¶¨´úÀíµØÖ·£¬¿ÉÒÔ¶à¸ö
+    # æŒ‡å®šä»£ç†åœ°å€ï¼Œå¯ä»¥å¤šä¸ª
     bootstrap-servers: 47.100.32.48:9092
 
-    # Ö¸¶¨Ä¬ÈÏtopic id
+    # æŒ‡å®šé»˜è®¤topic id
     template:
       default-topic: middleware
 
-    # Ö¸¶¨listenerÈİÆ÷ÖĞµÄÏß³ÌÊı£¬ÓÃÓÚÌá¸ß²¢·¢Á¿
+    # æŒ‡å®šlistenerå®¹å™¨ä¸­çš„çº¿ç¨‹æ•°ï¼Œç”¨äºæé«˜å¹¶å‘é‡
     listener:
       concurrency: 3
 
-    # Éú²úÕßÅäÖÃ
+    # ç”Ÿäº§è€…é…ç½®
     producer:
       retries: 0
-      # Ã¿´ÎÅúÁ¿·¢ËÍÏûÏ¢µÄÊıÁ¿
+      # æ¯æ¬¡æ‰¹é‡å‘é€æ¶ˆæ¯çš„æ•°é‡
       batch-size: 10000
+      # ç¼“å­˜å®¹é‡
       buffer-memory: 33554432
+      # æŒ‡å®šæ¶ˆæ¯keyå’Œæ¶ˆæ¯ä½“çš„ç¼–è§£ç æ–¹å¼
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.apache.kafka.common.serialization.StringSerializer
       properties:
         linger.ms: 1
+      acks: -1
 
-    # Ïû·ÑÕßÅäÖÃ
+    # æ¶ˆè´¹è€…é…ç½®
     consumer:
+      #å…³é—­è‡ªåŠ¨æäº¤ æ”¹ç”±spring-kafkaæäº¤
       enable-auto-commit: false
-      auto-commit-interval: 100ms
+      auto-commit-interval: 100
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       properties:
         session.timeout.ms: 15000
-      # Ö¸¶¨Ä¬ÈÏÏû·ÑÕßgroup id
+      # æŒ‡å®šé»˜è®¤æ¶ˆè´¹è€…group id
       group-id: Lab5
-      # ÈôÉèÖÃÎªearliest,ÄÇÃ´»á´ÓÍ·¿ªÊ¼¶Ápartition
+      # è‹¥è®¾ç½®ä¸ºearliest,é‚£ä¹ˆä¼šä»å¤´å¼€å§‹è¯»partition
       auto-offset-reset: latest
-
+      #æ‰¹é‡æ¶ˆè´¹ ä¸€æ¬¡æ¥æ”¶çš„æœ€å¤§æ•°é‡
+      max-poll-records: 20
