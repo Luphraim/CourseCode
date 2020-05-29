@@ -1,0 +1,37 @@
+mybatis:
+  #domain对象的包
+  type-aliases-package: xmu.middleware.web.entities
+  #mapper.xml所在的位置
+  mapper-locations: classpath:mapper/*.xml
+  configuration:
+    #自动将SQL中查出来的带下划线的字段，转换为驼峰标志，再去匹配类中的属性
+    map-underscore-to-camel-case: true
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://47.100.32.48:3306/middleware?useUnicode=true&characterEncoding=utf8
+    username: joker
+    password: joker
+
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      #初始化时建立物理连接的个数
+      initial-size: 3
+      #  最小连接池数量
+      min-idle: 1
+      #最大连接池数量
+      max-active: 5
+      #获取连接时最大等待时间
+      max-wait: 60000
+      #配置监控页面访问登录名及密码
+      stat-view-servlet:
+        login-username: admin
+        login-password: 123456
+      filter:
+        stat:
+          #是否开启慢sql查询监控
+          log-slow-sql: true
+          #慢SQL执行时间
+          slow-sql-millis: 100
+      validation-query: select 1
