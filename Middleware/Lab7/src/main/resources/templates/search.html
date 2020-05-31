@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>校友录查询</title>
+
+    <!-- Styles -->
+    <link href="assets/css/lib/font-awesome.min.css" rel="stylesheet">
+    <link href="assets/css/lib/themify-icons.css" rel="stylesheet">
+    <link href="assets/css/lib/data-table/dataTables.bootstrap.min.css" rel="stylesheet" />
+    <link href="assets/css/lib/data-table/buttons.bootstrap.min.css" rel="stylesheet" />
+    <link href="assets/css/lib/menubar/sidebar.css" rel="stylesheet">
+    <link href="assets/css/lib/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/css/lib/helper.css" rel="stylesheet">
+    <link href="assets/css/style.css" rel="stylesheet">
+</head>
+
+<body>
+<div th:replace="bar::sidebar"/>
+
+<div class="content-wrap">
+    <div class="main">
+        <div class="container-fluid">
+            <section id="main-content">
+                <input type="hidden" name="Searchtype" value="put">
+                <div class="form-group">
+                    <br/>
+                    <select id="search-name" name="Searchname" htmlEscape="false" class="form-control" style="height:40px;width:150px;display:inline-block;">
+                        <option value="id">按ID查询</option>
+                        <option value="name">按姓名查询</option>
+                        <option value="grade">按年级查询</option>
+                    </select>
+                    <input type="text" id="search-text" value="" placeholder="Search" maxlength="45" autocomplete="off" class="" style="height:40px;width:500px;display:inline-block;">
+                    <span class="status"></span>
+                    <a class="btn btn-sm btn-primary searchBtn" style="color:#ffffff;font-size:20px;height:40px;width:6%;margin-top:-4px;display:inline-block;text-align: center;padding-top: 5px;" value="0">查询</a>
+                    <div class="text clearfix">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        <div class="card card-small mb-4">
+                            <div class="card-body p-0 pb-3 text-center">
+                                <table class="table mb-0">
+                                    <thead class="bg-light">
+                                    <tr>
+                                        <th scope="col" class="border-0" style="text-align:center;">ID</th>
+                                        <th scope="col" class="border-0" style="text-align:center;">姓名</th>
+                                        <th scope="col" class="border-0" style="text-align:center;">性别</th>
+                                        <th scope="col" class="border-0" style="text-align:center;">年级</th>
+                                        <th scope="col" class="border-0" style="text-align:center;">学院</th>
+                                        <th scope="col" class="border-0" style="text-align:center;">专业</th>
+                                        <th scope="col" class="border-0" style="text-align:center;">电话</th>
+                                        <th scope="col" class="border-0" style="text-align:center;">邮箱</th>
+                                        <th scope="col" class="border-0" style="text-align:center;">查看</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="a,state:${alumnis}">
+                                        <td th:text="${a.id}" style="text-align:center;"></td>
+                                        <td th:text="${a.name}" style="text-align:center;"></td>
+                                        <td th:text="${a.gender}" style="text-align:center;"></td>
+                                        <td th:text="${a.grade}+'-'+${c.cend_time}" style="text-align:center;"></td>
+                                        <td th:text="${a.college}" style="text-align:center;"></td>
+                                        <td th:text="${a.discipline}" style="text-align:center;"></td>
+                                        <td th:text="${a.phone}" style="text-align:center;"></td>
+                                        <td th:text="${a.email}" th:id="${state.count}" style="text-align:center;" name="conf"></td>
+                                        <td style="text-align:center;">
+                                            <button th:attr="del_uri=@{/getInfo_}+${a.id}, row=${state.count}," class="btn btn-sm btn-primary chooseBtn">查看</button>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+
+<!-- jquery vendor -->
+<script src="assets/js/lib/jquery.min.js"></script>
+<script src="assets/js/lib/jquery.nanoscroller.min.js"></script>
+<!-- nano scroller -->
+<script src="assets/js/lib/menubar/sidebar.js"></script>
+<script src="assets/js/lib/preloader/pace.min.js"></script>
+<!-- sidebar -->
+
+<!-- bootstrap -->
+
+<script src="assets/js/lib/bootstrap.min.js"></script><script src="assets/js/scripts.js"></script>
+<!-- scripit init-->
+<script src="assets/js/lib/data-table/datatables.min.js"></script>
+<script src="assets/js/lib/data-table/dataTables.bootstrap.min.js"></script>
+<script src="assets/js/lib/data-table/dataTables.buttons.min.js"></script>
+<script src="assets/js/lib/data-table/buttons.bootstrap.min.js"></script>
+<script src="assets/js/lib/data-table/jszip.min.js"></script>
+<script src="assets/js/lib/data-table/pdfmake.min.js"></script>
+<script src="assets/js/lib/data-table/vfs_fonts.js"></script>
+<script src="assets/js/lib/data-table/buttons.html5.min.js"></script>
+<script src="assets/js/lib/data-table/buttons.print.min.js"></script>
+<script src="assets/js/lib/data-table/buttons.colVis.min.js"></script>
+<script src="assets/js/lib/data-table/datatables-init.js"></script>
+
+<script type="text/javascript" src="login-script.js"></script>
+<script>
+    $(".chooseBtn").click(function(){
+        //选课
+        if(confirm("确定选择此课程？"))
+        {
+            if($(this).attr("conf")=='true') {
+                var str1 = "选课失败，请重新选课！";
+                alert(str1);
+            }
+            else{
+                var str2 = "选课成功！";
+                alert(str2);
+                $("#deleteStudentForm").attr("action",$(this).attr("del_uri")).submit();
+            }
+        }
+        else
+            return false;
+    });
+
+    $(".search-type").click(function(){
+        $(this).attr("href","/choose_"+ $(this).attr("value") +"_0_0");
+    });
+
+    $(".searchBtn").click(function(){
+        $(this).attr("href","/choose_0_"+ $("#search-name").val()+"_"+$("#search-text").val());
+    });
+</script>
+
+
+</body>
+
+</html>
