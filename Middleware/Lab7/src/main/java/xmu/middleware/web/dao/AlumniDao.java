@@ -1,6 +1,7 @@
 package xmu.middleware.web.dao;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 import xmu.middleware.web.entities.Alumni;
 import xmu.middleware.web.mapper.AlumniMapper;
 
@@ -10,6 +11,7 @@ import java.util.Map;
 /**
  * @author Jason
  */
+@Repository
 public class AlumniDao {
 
     @Autowired
@@ -19,12 +21,12 @@ public class AlumniDao {
         return alumniMapper.addAlumni(alumni);
     }
 
-    public Alumni searchById(Integer id){
+    public Alumni searchById(Integer id) {
         return alumniMapper.searchById(id);
     }
 
-    public List<Alumni> searchByGrade(Map<String,Integer> data){
-        return alumniMapper.searchByGrade(data);
+    public List<Alumni> searchBy(Map<String, String> data) {
+        return alumniMapper.searchBy(data);
     }
 
     public Integer alterAlumni(Alumni alumni) {

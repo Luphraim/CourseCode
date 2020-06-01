@@ -26,6 +26,8 @@ spring:
           slow-sql-millis: 100
       validation-query: select 1
 
+  messages:
+    basename: i18n.login
   thymeleaf:
     cache: false
     check-template: true

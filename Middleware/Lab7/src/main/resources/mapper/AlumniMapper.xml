@@ -22,10 +22,20 @@
         select * from alumni where id = #{id};
     </select>
 
-    <select id="searchByGrade" parameterType="Map" resultMap="AlumniMap">
+    <select id="searchBy" parameterType="Map" resultMap="AlumniMap">
         select * from alumni
-        where grade = #{grade}
-        limit #{offset},#{limit};
+        <if test="name == 'name'">
+            where alumni.name = #{text}
+        </if>
+        <if test="name == 'grade'">
+            where grade = #{text}
+        </if>
+        <if test="name == 'college'">
+            where college = #{text}
+        </if>
+        <if test="name == 'discipline'">
+            where discipline = #{text}
+        </if>
     </select>
 
     <update id="alterAlumni" parameterType="Alumni">

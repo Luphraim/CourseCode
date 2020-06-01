@@ -14,6 +14,7 @@ public interface AlumniMapper {
 
     /**
      * Insert
+     *
      * @param alumni alumni
      * @return int
      */
@@ -21,6 +22,7 @@ public interface AlumniMapper {
 
     /**
      * search by id
+     *
      * @param id id
      * @return alumni
      */
@@ -29,13 +31,15 @@ public interface AlumniMapper {
 
     /**
      * search by grade
+     *
      * @param data search data
      * @return alumni list
      */
-    public List<Alumni> searchByGrade(Map<String,Integer> data);
+    public List<Alumni> searchBy(Map<String, String> data);
 
     /**
      * update one's info
+     *
      * @param alumni alumni
      * @return int
      */
@@ -43,6 +47,7 @@ public interface AlumniMapper {
 
     /**
      * delete an alumni
+     *
      * @param id id
      * @return int
      */
