@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xmu.middleware.alumni.mapper.AlumniMapper">
+
+    <resultMap id="AlumniMap" type="Alumni">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="gender" column="gender"/>
+        <result property="grade" column="grade"/>
+        <result property="college" column="college"/>
+        <result property="discipline" column="discipline"/>
+        <result property="phone" column="phone"/>
+        <result property="email" column="email"/>
+    </resultMap>
+
+    <resultMap id="CountMap" type="CountInfo">
+        <result property="count" column="count(*)"/>
+        <result property="col" column="col"/>
+    </resultMap>
+
+    <select id="countByGrade" resultMap="CountMap">
+        select count(*),grade as col
+        from alumni group by grade;
+    </select>
+
+    <select id="countByDiscipline" resultMap="CountMap">
+        select count(*),discipline as col
+        from alumni group by discipline;
+    </select>
+
+    <insert id="addAlumni" parameterType="Alumni">
+        insert into alumni
+        values(#{id},#{name},#{gender},#{grade},#{college},#{discipline},#{phone},#{email});
+    </insert>
+
+    <select id="searchById" parameterType="Integer" resultMap="AlumniMap">
+        select * from alumni where id = #{id};
+    </select>
+
+    <select id="searchBy" parameterType="Map" resultMap="AlumniMap">
+        select * from alumni
+        <if test="name == 'id'">
+            where alumni.id like '%${text}%'
+        </if>
+        <if test="name == '姓名'">
+            where alumni.name like '%${text}%'
+        </if>
+        <if test="name == '年级'">
+            where grade = like '%${text}%'
+        </if>
+        <if test="name == '学院'">
+            where college like '%${text}%'
+        </if>
+        <if test="name == '专业'">
+            where discipline like '%${text}%'
+        </if>
+    </select>
+
+    <update id="alterAlumni" parameterType="Alumni">
+        update alumni
+        set alumni.name = #{name},
+            gender = #{gender},
+            grade = #{grade},
+            college = #{college},
+            discipline = #{discipline},
+            phone = #{phone},
+            email = #{email}
+        where id = #{id};
+    </update>
+
+    <delete id="delete" parameterType="Integer">
+        delete from alumni where id = #{id};
+    </delete>
+
+</mapper>
